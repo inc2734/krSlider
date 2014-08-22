@@ -1,11 +1,11 @@
 /**
  * Plugin Name: KrSlider
  * Description: シンプルなスライドショーを実装するjQueryプラグイン
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Created : March 25, 2014
- * Modified: August 1, 2014
+ * Modified: August 20, 2014
  * License: GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  *
@@ -14,7 +14,7 @@
  * @param numeric  interval                  次のアニメーションまでのインターバル（ms）
  * @param string   easing                    イージング
  * @param bool     showNav                   ナビゲーションの表示
- * @param string   navStyle( string, image ) ナビゲーション種別
+ * @param string   navStyle( string, image, title ) ナビゲーション種別
  * @param bool     showCaption               キャプションの表示
  * @param bool     showPrevNextNav           前後ナビの表示
  * @param string   prev_text                 前ナビの文字列
@@ -385,6 +385,16 @@
 					images.each( function( i, e ) {
 						if ( config.navStyle == 'string' ) {
 							var navhtml = ( i + 1 );
+						} else if ( config.navStyle == 'title' ) {
+							var img = images.eq( i );
+							var navhtml = img.data( 'title' );
+							if ( !navhtml ) {
+								if ( img.attr( 'title' ) ) {
+									navhtml = img.attr( 'title' );
+								} else if ( img.attr( 'alt' ) ) {
+									navhtml = img.attr( 'alt' );
+								}
+							}
 						} else if ( config.navStyle == 'image' ) {
 							var src = '';
 							var thumbnail = $( e ).data( 'thumbnail' );
