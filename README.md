@@ -1,4 +1,4 @@
-# KrSlider Version 1.0.2
+# KrSlider Version 1.0.3
 
 ## information
 
@@ -15,7 +15,7 @@ http://2inc.org
 March 25, 2014
 
 ### Modified
-August 20, 2014
+August 25, 2014
 
 ### License
 GPLv2

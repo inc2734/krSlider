@@ -1,11 +1,11 @@
 /**
  * Plugin Name: KrSlider
  * Description: シンプルなスライドショーを実装するjQueryプラグイン
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Created : March 25, 2014
- * Modified: August 20, 2014
+ * Modified: August 25, 2014
  * License: GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  *
@@ -51,7 +51,9 @@
 			if ( config.theme ) {
 				canvas.addClass( 'krslider-theme-' + config.theme );
 			}
-			canvas.wrapInner( '<div class="krslider-wrapper" />' );
+			if ( canvas.find( '.krslider-wrapper' ).length <= 0 ) {
+				canvas.wrapInner( '<div class="krslider-wrapper" />' );
+			}
 			var wrapper = canvas.find( '.krslider-wrapper' );
 			wrapper.wrapInner( '<div class="krslider-inner" />' );
 			var inner = canvas.find( '.krslider-inner' );
@@ -71,7 +73,9 @@
 			}
 			if ( config.showNav === true && images.length > 1 ) {
 				inner.after( '<div class="krslider-nav" />' );
-				var sliderNav = wrapper.find( '.krslider-nav' );
+			}
+			if ( canvas.find( '.krslider-nav' ).length > 0 ) {
+				var sliderNav = canvas.find( '.krslider-nav' );
 			}
 			if ( config.showPrevNextNav === true && images.length > 1 ) {
 				inner.after( '<div class="krslider-prev-next-nav" />' );
@@ -169,7 +173,8 @@
 					}
 				}
 				if ( typeof sliderNav !== 'undefined' ) {
-					methods.createSliderNav();
+					if ( config.showNav === true )
+						methods.createSliderNav();
 					sliderNav.find( 'ul li' ).on( 'click touchend', function() {
 						if ( ! $( this ).hasClass( 'cur' ) && moving === false && cnt > 1 ) {
 							var key = $( this ).data( 'key' );
