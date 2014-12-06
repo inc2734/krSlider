@@ -1,4 +1,4 @@
-# KrSlider Version 1.0.3
+# KrSlider Version 1.1.0
 
 ## information
 
@@ -15,7 +15,12 @@ http://2inc.org
 March 25, 2014
 
 ### Modified
-August 25, 2014
+December 5, 2014
+
+### Change log
+#### 1.1.0
+* Fixed a bug that does not display the caption when element is not image.
+* To be able to define the krslider-caption-wrapper, krslider-nav and krslider-prev-next-nav in advance .
 
 ### License
 GPLv2

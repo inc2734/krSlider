@@ -1,11 +1,11 @@
 /**
  * Plugin Name: KrSlider
  * Description: シンプルなスライドショーを実装するjQueryプラグイン
- * Version: 1.0.3
+ * Version: 1.1.0
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Created : March 25, 2014
- * Modified: August 25, 2014
+ * Modified: December 5, 2014
  * License: GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  *
@@ -57,7 +57,7 @@
 			var wrapper = canvas.find( '.krslider-wrapper' );
 			wrapper.wrapInner( '<div class="krslider-inner" />' );
 			var inner = canvas.find( '.krslider-inner' );
-			var images = inner.children();
+			var images = inner.children( '*:not([class^="krslider-"])' );
 			var cnt = images.length;
 			var timer = null;
 			var moving = false;
@@ -66,20 +66,26 @@
 			var slideDirection;
 			var player = [];
 			if ( config.showCaption === true ) {
-				inner.after(
-					$( '<div class="krslider-caption-wrapper" />' )
-				);
-				var captionWrapper = wrapper.find( '.krslider-caption-wrapper' );
+				if ( canvas.find( '.krslider-caption-wrapper' ).length <= 0 ) {
+					inner.after(
+						$( '<div class="krslider-caption-wrapper" />' )
+					);
+				}
+				var captionWrapper = canvas.find( '.krslider-caption-wrapper' );
 			}
 			if ( config.showNav === true && images.length > 1 ) {
-				inner.after( '<div class="krslider-nav" />' );
+				if ( canvas.find( '.krslider-nav' ).length <= 0 ) {
+					inner.after( '<div class="krslider-nav" />' );
+				}
 			}
 			if ( canvas.find( '.krslider-nav' ).length > 0 ) {
 				var sliderNav = canvas.find( '.krslider-nav' );
 			}
 			if ( config.showPrevNextNav === true && images.length > 1 ) {
-				inner.after( '<div class="krslider-prev-next-nav" />' );
-				var prevNextNav = wrapper.find( '.krslider-prev-next-nav' );
+				if ( canvas.find( '.krslider-prev-next-nav' ).length <= 0 ) {
+					inner.after( '<div class="krslider-prev-next-nav" />' );
+				}
+				var prevNextNav = canvas.find( '.krslider-prev-next-nav' );
 			}
 			wrapper.addClass( config.type );
 
@@ -330,7 +336,7 @@
 						height: '',
 						width : ''
 					} );
-					inner.children( '*:not(img)').css( {
+					images.children( '*:not(img)' ).css( {
 						height: '',
 						width : ''
 					} );
@@ -357,22 +363,26 @@
 						left = -overwidth / 2;
 					}
 					inner.css( 'left', left );
-					inner.children( '*:not(img)').css( {
+					images.children( '*:not(img)' ).css( {
 						height: height,
 						width : width
 					} );
 				},
 				showCaption: function( key ) {
 					if ( config.showCaption === true ) {
-						var img = images.eq( key );
-						var captionhtml = img.data( 'caption' );
+						var item = images.eq( key );
+						var captionhtml = item.data( 'caption' );
 						var _caption = '';
 						if ( captionhtml ) {
 							_caption = $( '#' + captionhtml ).html();
-						} else if ( img.attr( 'title' ) ) {
-							_caption = img.attr( 'title' );
-						} else if ( img.attr( 'alt' ) ) {
-							_caption = img.attr( 'alt' );
+						} else if ( item.attr( 'title' ) ) {
+							_caption = item.attr( 'title' );
+						} else if ( item.attr( 'alt' ) ) {
+							_caption = item.attr( 'alt' );
+						} else if ( item.children().attr( 'title' ) ) {
+							_caption = item.children().attr( 'title' );
+						} else if ( item.children().attr( 'alt' ) ) {
+							_caption = item.children().attr( 'alt' );
 						}
 						if ( _caption ) {
 							var caption = $( '<span />' ).append( _caption );
@@ -391,13 +401,17 @@
 						if ( config.navStyle == 'string' ) {
 							var navhtml = ( i + 1 );
 						} else if ( config.navStyle == 'title' ) {
-							var img = images.eq( i );
-							var navhtml = img.data( 'title' );
+							var item = images.eq( i );
+							var navhtml = item.data( 'title' );
 							if ( !navhtml ) {
-								if ( img.attr( 'title' ) ) {
-									navhtml = img.attr( 'title' );
-								} else if ( img.attr( 'alt' ) ) {
-									navhtml = img.attr( 'alt' );
+								if ( item.attr( 'title' ) ) {
+									navhtml = item.attr( 'title' );
+								} else if ( item.attr( 'alt' ) ) {
+									navhtml = item.attr( 'alt' );
+								} else if ( item.children().attr( 'alt' ) ) {
+									navhtml = item.children().attr( 'alt' );
+								} else if ( item.children().attr( 'alt' ) ) {
+									navhtml = item.children().attr( 'alt' );
 								}
 							}
 						} else if ( config.navStyle == 'image' ) {
@@ -412,11 +426,11 @@
 							if ( !src ) {
 								// 画像のとき
 								if ( e.nodeName == 'IMG' ) {
-									src = inner.children().eq( i ).attr( 'src' );
+									src = $( e ).attr( 'src' );
 								}
 								// リンクのとき
 								else if ( e.nodeName == 'A' ) {
-									src = inner.children().eq( i ).children().attr( 'src' );
+									src = $( e ).children().attr( 'src' );
 								}
 								// 画像以外のとき
 								else {

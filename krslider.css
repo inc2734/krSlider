@@ -40,6 +40,8 @@
  * krslider-caption-wrapper
  */
 .krslider-caption-wrapper {
+	top: auto; /* For when in the inner */
+	left: auto; /* For when in the inner */
 	display: none;
 	z-index: 1;
 }
@@ -50,6 +52,8 @@
  */
 .krslider-nav,
 .krslider-prev-next-nav {
+	top: auto; /* For when in the inner */
+	left: auto; /* For when in the inner */
 	z-index: 1;
 }
 .krslider-nav ul li,
