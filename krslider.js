@@ -1,11 +1,11 @@
 /**
  * Plugin Name: KrSlider
  * Description: シンプルなスライドショーを実装するjQueryプラグイン
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Created : March 25, 2014
- * Modified: December 5, 2014
+ * Modified: December 9, 2014
  * License: GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  *
@@ -22,6 +22,7 @@
  * @param numeric  maxWidth                  幅指定（画像要素以外を使用する場合）
  * @param numeric  maxHeight                 高さ指定（画像要素以外を使用する場合）
  * @param bool     autoResize                自動リサイズ実行
+ * @param bool     fullSize                  幅100%表示
  * @param string   theme                     テーマ用のクラス名
  * @param function afterMove                 スライド後のコールバック関数
  */
@@ -41,6 +42,7 @@
 			maxWidth       : 0,
 			maxHeight      : 0,
 			autoResize     : false,
+			fullSize       : false,
 			theme          : false,
 			afterMove      : function() {}
 		};
@@ -94,6 +96,10 @@
 				$( window ).resize( function() {
 					methods.setInnerSize();
 				} );
+			}
+
+			if ( config.fullSize === true ) {
+				wrapper.addClass( 'full-size' );
 			}
 
 			$( window ).load( function() {
@@ -344,8 +350,8 @@
 					var width = images.eq( 0 ).width();
 					var height = images.eq( 0 ).height();
 					if ( config.maxWidth ) {
-						if ( config.maxWidth > wrapper.width() ) {
-							width = wrapper.width();
+						if ( config.maxWidth > width ) {
+							width = width;
 						} else {
 							width = config.maxWidth;
 						}

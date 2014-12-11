@@ -18,9 +18,13 @@ March 25, 2014
 December 5, 2014
 
 ### Change log
+#### 1.1.1
+* Fixed a bug that item width is incorrect when maxWidth is setted.
+* Added fullSize option.
+
 #### 1.1.0
 * Fixed a bug that does not display the caption when element is not image.
-* To be able to define the krslider-caption-wrapper, krslider-nav and krslider-prev-next-nav in advance .
+* To be able to define the krslider-caption-wrapper, krslider-nav and krslider-prev-next-nav in advance.
 
 ### License
 GPLv2
