@@ -1,11 +1,11 @@
 /**
  * Plugin Name: KrSlider
  * Description: シンプルなスライドショーを実装するjQueryプラグイン
- * Version: 1.1.1
+ * Version: 1.1.2
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Created : March 25, 2014
- * Modified: December 9, 2014
+ * Modified: January 15, 2014
  * License: GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  *
@@ -377,10 +377,11 @@
 				showCaption: function( key ) {
 					if ( config.showCaption === true ) {
 						var item = images.eq( key );
-						var captionhtml = item.data( 'caption' );
 						var _caption = '';
-						if ( captionhtml ) {
-							_caption = $( '#' + captionhtml ).html();
+						if ( item.data( 'caption' ) ) {
+							_caption = $( '#' + item.data( 'caption' ) ).html();
+						} else if ( item.children().data( 'caption' ) ) {
+							_caption = $( '#' + item.children().data( 'caption' ) ).html();
 						} else if ( item.attr( 'title' ) ) {
 							_caption = item.attr( 'title' );
 						} else if ( item.attr( 'alt' ) ) {

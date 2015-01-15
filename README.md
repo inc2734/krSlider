@@ -15,9 +15,12 @@ http://2inc.org
 March 25, 2014
 
 ### Modified
-December 5, 2014
+January 15, 2014
 
 ### Change log
+#### 1.1.2
+* Change as caption can be displayed if there is a data-caption to image in the anchor.
+
 #### 1.1.1
 * Fixed a bug that item width is incorrect when maxWidth is setted.
 * Added fullSize option.
